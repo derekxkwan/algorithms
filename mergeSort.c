@@ -52,7 +52,6 @@ int main(int argc, char* argv[]){
 		
 	};
 	
-	//int arr[] = {3, 6, 9, 2, 5, 4};
 	mergeSort(arr, len);
 	for(int i=0; i<len; i++){
 		printf("%d ", arr[i]);
