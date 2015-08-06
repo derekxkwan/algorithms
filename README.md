@@ -1,2 +1,1 @@
-# cAlgorithms
-algorithms in C 
+algorithms
