@@ -19,7 +19,7 @@ void merge(int arr[], int left[], int right[], int mid, int rest){
 
 	};
 void mergeSort(int arr[], int len){
-	int mid, rest;
+	int i, mid, rest;
 	int *left, *right;
 	if(len <= 1){
 		return;
@@ -29,10 +29,10 @@ void mergeSort(int arr[], int len){
 		rest = len-mid;
 		left = (int*)malloc(mid*sizeof(int));
 		right = (int*)malloc((rest)*sizeof(int));
-		for(int i=0;i<mid;i++){
+		for(i=0;i<mid;i++){
 			left[i] = arr[i];
 			};
-		for(int i=0;i<rest;i++){
+		for(i=0;i<rest;i++){
 			right[i] = arr[i+mid];
 		};
 		mergeSort(left, mid);
@@ -45,15 +45,15 @@ void mergeSort(int arr[], int len){
 };
 
 int main(int argc, char* argv[]){
-	int len = argc-1;
+	int i, len = argc-1;
 	int *arr = (int*)malloc(len*sizeof(int)); 
-	for(int i=1; i<argc; i++){
+	for(i=1; i<argc; i++){
 		arr[i-1]=atoi(argv[i]);
 		
 	};
 	
 	mergeSort(arr, len);
-	for(int i=0; i<len; i++){
+	for(i=0; i<len; i++){
 		printf("%d ", arr[i]);
 	};
 	printf("\n");
