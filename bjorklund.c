@@ -60,7 +60,7 @@ int main(int argc, char * argv[]){
 			
 
 		};
-		ksize++;
+		ksize+=msize;
 		if(m>=k){
 			m = m-k;
 
