@@ -83,6 +83,8 @@ int main(int argc, char * argv[]){
 		printf("%c ", eucstr[i]);
 			};
 		printf("\n");
+	free(eucstr);
+	free(temp);
 	return 0;
 
 }
