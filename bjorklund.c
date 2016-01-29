@@ -14,7 +14,7 @@
 int main(int argc, char * argv[]){
 	//n is first arg, k is second
 	int i, r, n, k, m, ksize, msize;
-	char * eucstr, *temp;
+	int * eucstr, *temp;
 	if(argc != 3){
 		printf("incorrect number of args\n");
 		return 0;
@@ -23,18 +23,16 @@ int main(int argc, char * argv[]){
 		n = atoi(argv[1]);
 		k = atoi(argv[2]);
 		};
-	m = 8;
-	n = 13;
-	k = 5;
+	m = n-k;
 	r = EUCMIN(m,k);
-	eucstr = malloc(n*sizeof(char));
-	temp = malloc(n*sizeof(char));
+	eucstr = malloc(n*sizeof(int));
+	temp = malloc(n*sizeof(int));
 	for(i=0; i<n;i++){
 		if(i<k){
-			eucstr[i] = '1';
+			eucstr[i] = 1;
 			}
 		else{
-			eucstr[i] = '0';
+			eucstr[i] = 0;
 			};
 		};
 	ksize = 1;
@@ -80,7 +78,7 @@ int main(int argc, char * argv[]){
 			};
 		};
 	for(i=0; i<n; i++){
-		printf("%c ", eucstr[i]);
+		printf("%d ", eucstr[i]);
 			};
 		printf("\n");
 	free(eucstr);
