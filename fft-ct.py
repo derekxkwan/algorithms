@@ -1,38 +1,34 @@
+import math
 from cmath import exp, pi
+import numpy.fft as npf
 
-def fft(x):
-    N = len(x)
-    if N == 1:
-        return x
-    Xk = [0 for x in range(N//2)]
-    XkpNd2 = [0 for x in range(N//2)]
-    even = x[0::2]
-    odd = x[1::2]
-    E = fft(even)
-    O = fft(odd)
+def reverse(x, n):
+    result = 0
+    for i in xrange(n):
+        if (x >> i) & 1: result |= 1 << (n - 1 - i)
+    return result
 
-    for k in range(N//2):
-        oMult = exp(-2j*pi*k/N)*O[k]
-        Xk[k] = E[k] + oMult
-        XkpNd2[k] = E[k] - oMult
-    X = Xk + XkpNd2
-    return X
-
-def ifft(X):
-    #must normalize by 1/N at end
-    N = len(X)
-    if N == 1:
-        return X
-    xk = [0 for x in range(N//2)]
-    xkpNd2 = [0 for x in range(N//2)]
-    even = X[0::2]
-    odd = X[1::2]
-    E = ifft(even)
-    O = ifft(odd)
-
-    for k in range(N//2):
-        oMult = exp(2j*pi*k/N)*O[k]
-        xk[k] = (E[k] + oMult)
-        xkpNd2[k] = (E[k] - oMult)
-    x = xk + xkpNd2
+def fft_it(x):
+    n = len(x)
+    q = int(round(math.log(n)/math.log(2)))
+    for i in range(n//2):
+        rev = reverse(i, q)
+        x[i],x[rev] = x[rev], x[i]
+    w = exp(-2j*pi/n)
+    for j in range(0,q):
+        m = 2**j
+        mrev = 2**(q-j)
+        #print("j: " + str(j) + ", m: " + str(m))
+        for k in range(0,2**(q-j-1)):
+            s = k*2*m
+            e = (k+1)*2*m #end not inclusive
+            r = s + (e-s)/2
+           # print("k: " + str(k) + ",s: " + str(s) + ", e: " + str(e) + ", r: " + str(r) + ", mrev*0.5/n:" + str(mrev*0.5/n))
+            for idx in range(s,r):
+                halfidx = idx - s
+                #print("halfidx:" + str(halfidx) + ", r+halfidx:" + str(r+halfidx))
+                wloc = w**(mrev * 0.5 * halfidx) * x[r+halfidx]
+                x[idx] = x[idx]+wloc
+                x[halfidx+r] = x[idx]-wloc
     return x
+
